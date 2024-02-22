@@ -122,7 +122,7 @@ class CaptureVideoFrames:
 
 if __name__ == "__main__":
     summarizedData = CaptureVideoFrames().callGPT()
-    # preProcData = Preprocessing().preprocess(summarizedData)
-    # data = EmbedChunks("text-embedding-ada-002")(preProcData)
-    # SaveData().insert_data(data)
-    # # model(preProcData)
+    preProcData = Preprocessing().preprocess(summarizedData)
+    data = EmbedChunks("text-embedding-ada-002")(preProcData)
+    SaveData().insert_data(data)
+    # model(preProcData)
