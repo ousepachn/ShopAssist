@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import moviepy.editor as mp
 from openai import OpenAI
+from langdetect import detect
 # Define the paths
 audio_outfolder = "audio_output/"
 transcript_outfolder = "transcript_output/"
@@ -51,6 +52,13 @@ for url in data["audio_url"][data["audio_transcript"].isna()]:
         print(transcript)
        # Save the transcript in the dataframe
         data.loc[data["audio_url"] == url, "audio_transcript"] = transcript.text# Save the dataframe as a pickle file
+
+# build only english version of the transcripts from audio
+#TODO - NEED TO SEE HOW TO REMOVE AUDIO LYRICS FRMO AUDIO
+for t in data["audio_transcript"]:
+    if str(t)!='nan' and len(t)>1:
+        if detect(t) == 'en':
+            data.loc[data["audio_transcript"] == t, "en_audio_transcript"]=t
 
 
 data.to_pickle("dataframe.pickle")
