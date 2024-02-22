@@ -1,0 +1,5 @@
+tqdm 
+openai==0.27.7
+pinecone-client==3.0.0 
+pinecone-datasets==0.7.0 
+bullmq
