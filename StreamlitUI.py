@@ -28,7 +28,7 @@ st.markdown("""
 )
 hd_row=st.container()
 r1=hd_row.columns([0.33,0.67])
-r1[0].image('hydrationceo\profile_pic.jpg')
+r1[0].image('hydrationceo/profile_pic.jpg')
 with r1[1]:
     st.subheader(profile_name)
     st.markdown(social_text,unsafe_allow_html=True)
