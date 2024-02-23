@@ -113,8 +113,8 @@ if prompt := st.chat_input(placeholder=placeholder):
             stream=True,
         )
         response = st.write_stream(stream)
-        hd_row=st.container()
         if response!="I don't know.":
+            hd_row=st.container()
             for post in posts:
                 r1=hd_row.columns([0.15,0.85])
                 r1[0].image(str(post['metadata']['thumbnail_url']).replace('\\','/'))

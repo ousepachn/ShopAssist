@@ -17,8 +17,8 @@ posts=1090
 placeholder="What were latest denim finds at target?" 
 
 # system message to 'prime' the model
-primer = f"""You are fashion blogger bot. A highly intelligent system that helps answer questions from users to a famous fashion blogger. 
-The three most relevant posts from the blogger is provided above the users question. Answer the users queestion using this information.
+primer = f"""You are fashion reviewer bot. A highly intelligent system that helps answer questions from users to about fashion. 
+All available information is provided above the users question. Answer the users question using this information.
 If the answer can not be found in the information provided, truthfully say "I don't know".  Be objective and succint in your response. answer in first person.  
 Do not use the phrase "blogger", "bot", "based on the information" in your response.  Response should not be more than 2 sentences
 """
@@ -113,15 +113,16 @@ if prompt := st.chat_input(placeholder=placeholder):
             stream=True,
         )
         response = st.write_stream(stream)
-        hd_row=st.container()
-        for post in posts:
-            r1=hd_row.columns([0.15,0.85])
-            r1[0].image(str(post['metadata']['thumbnail_url']).replace('\\','/'))
-            with r1[1]:
-                st.markdown("**post link:** www.instagram.com/p/"+post['id'],unsafe_allow_html=True)
-                st.markdown('**Date:** '+ post['metadata']['date_utc'])
-                st.markdown('**Tags:** '+str(post['metadata']['caption_hashtags']))
-                st.markdown('**Relevance Score:** '+ str(post['score'])[:4])
+        if response!="I don't know.":
+            hd_row=st.container()
+            for post in posts:
+                r1=hd_row.columns([0.15,0.85])
+                r1[0].image(str(post['metadata']['thumbnail_url']).replace('\\','/'))
+                with r1[1]:
+                    st.markdown("**post link:** www.instagram.com/p/"+post['id'],unsafe_allow_html=True)
+                    st.markdown('**Date:** '+ post['metadata']['date_utc'])
+                    st.markdown('**Tags:** '+str(post['metadata']['caption_hashtags']))
+                    st.markdown('**Relevance Score:** '+ str(post['score'])[:4])
     st.session_state.messages2.append({"role": "assistant", "content": response})
 
 
