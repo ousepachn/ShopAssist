@@ -5,24 +5,21 @@ import time
 
 ############hardcoded datainputs
 
-profile_name='hydrationceo'
-bio='📍NYC\n 💖 your unfiltered skincare & beauty bestie \n Business only: rachel@hydrationceo.com\n Product Faves 👇'
-a_link='https://www.instagram.com/hydrationceo/'
+profile_name='whatsmitafound'
+bio=' Welcome Friend. I’m Smita from Dallas TX \n Stand out style on a budget. Click link below to shop my looks. \n 📧 Whatsmitafound@gmail.com'
+a_link='https://www.instagram.com/whatsmitafound/'
 social_text='Social: [{profile}]({link})'.format(profile=profile_name,link=a_link)
-followers=1234567
+followers=459261
 followees=1234
-posts=12345
+posts=1090
 placeholder="What were the under $15 lipsticks reviewed in the last 2 weeks?" 
 ##########################
 
 #configurations
 st.set_page_config(
-    page_title="ShopAssisst",
+    page_title="ShopAssist - whatsmitafound",
     page_icon="👋",
 )
-
-st.sidebar.success("Select a demo above.")
-
 
 
 
@@ -34,7 +31,7 @@ st.markdown("""
 )
 hd_row=st.container()
 r1=hd_row.columns([0.33,0.67])
-r1[0].image('hydrationceo/profile_pic.jpg')
+r1[0].image('{profile_name}/profile_pic.jpg')
 with r1[1]:
     st.subheader(profile_name)
     st.markdown(social_text,unsafe_allow_html=True)
