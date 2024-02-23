@@ -3,4 +3,4 @@ This github repo is created for the shopassist app.  This was put together for t
 
 The app is hosted on https://shopassist-lab.streamlit.app/
 
-We also ran a RAG performance evaluation (Triad method) with Truelens.  Initial results can be seen in TrulensEval.pdf
+We also ran a RAG performance evaluation (Triad method) with Truelens.  Initial results can be seen in [TrulensEval.pdf](https://github.com/ousepachn/ShopAssist/blob/main/TrulensEval.pdf)
