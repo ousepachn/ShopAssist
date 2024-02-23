@@ -1,4 +1,4 @@
 millify
 openai
 langchain_openai
-pinecone
+pinecone==2.1.0
