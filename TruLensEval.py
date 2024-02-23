@@ -1,3 +1,13 @@
+###This document outlines the testig scripts that were used check if the rAG output is coherent.  We used TruLens and the suggested RAG triad framework to finalize the final prompt
+## things to note: 1. The hydrationceo bot has decent performance, with minimal customizations and parameter edits
+##                 2. The whatsmitafound bot does not perform as well. Low groundedness and context scores.  This is due to the fact that most of her videos have 'songs with lyrics' 
+##                      in the background. Also she does not do voiceovers in her videos is transcribing on '''
+## Todo: To improve the RAG performance for the whatsmitafoudn bot.  Upgrade the gpt4 vision based workflow where we are going from video -> frmes -> images -> text.  
+##      This will heolp us trascribe videos which do not have voice overs, and also videos where there is music with lyrics playing the background.  
+## Guess TruLens helped us get to this conclusion.
+## The gitrepo also contains a pdf outlining the findings of the TruLens evaluation.  The pdf is named TruLensEval.pdf
+
+
 import numpy as np
 from langchain_openai import OpenAIEmbeddings
 import os
@@ -12,34 +22,23 @@ from trulens_eval.feedback.provider.openai import OpenAI as fOpenAI
 
 
 
-
+# setting up OpenAI and Pinecone
 # get API key from top-right dropdown on OpenAI website
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-
-
 model_name = 'text-embedding-ada-002'
-
 embed = OpenAIEmbeddings(
     model=model_name,
     openai_api_key=OPENAI_API_KEY
 )
-
-
 # initialize connection to pinecone (get API key at app.pinecone.io)
 api_key = os.getenv("PINECONE_API_KEY")
-
 # configure client
 pc = Pinecone(api_key=api_key)
-
 spec = ServerlessSpec(
     cloud="aws", region="us-west-2"
 )
-
-
 ### INITIALIZE AN EMBEDDING INDEX IN PINECONE ##
 index_name = "shopassist-ada-002-v1"
-
-
 # connect to index
 index = pc.Index(index_name)
 time.sleep(1)
@@ -47,7 +46,8 @@ time.sleep(1)
 index.describe_index_stats()
 
 
-### begin Trulens setup
+### BEGIN TRULENS TESTING SETUP ####
+
 profile_name='hydrationceo'
 primer_beauty = f"""You are beauty reviewer bot.  A highly intelligent system that helps answer questions from users. 
 All available information is provided above the users question. Answer the users question using this information.
