@@ -58,5 +58,10 @@ st.markdown(
     This demo is limited to only posts data, and has many bugs since it was put together by non developers in less than a week. The technology offers promise
     and provides influencers an easy way to increase their affiliate sales revenue and reduce the amount of time spent on Content operations. 
 
+    
+
+    
+
+
 """
 )

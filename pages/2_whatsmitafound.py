@@ -3,7 +3,7 @@ from openai import OpenAI
 from millify import millify
 import time
 import os
-
+import utils.QueryVectorDB as qvdb
 
 ############hardcoded datainputs
 
@@ -15,7 +15,33 @@ followers=459261
 followees=1234
 posts=1090
 placeholder="What were latest denim finds at target?" 
+
+# system message to 'prime' the model
+primer = f"""You are fashion reviewer bot. A highly intelligent system that answers
+user questions based on the information provided above
+each question. If the answer can not be found in the information
+provided by the user you truthfully say "I don't know".  do not say 'based on the information provided' in your response.
+"""
 ##########################
+
+
+def rag_query(query):
+    Vector=qvdb.embed.embed_query(query)
+
+    results=qvdb.index.query(
+        vector=Vector,
+        filter={
+            "creatorid": {"$eq": profile_name}
+        },
+        top_k=3,
+        include_metadata=True
+    )
+
+    contexts = [result["metadata"]["text"] for result in results['matches']]
+    augmented_query = "\n\n---\n\n".join(contexts)+"\n\n---\n\n"+ query    
+    return augmented_query
+
+
 
 #configurations
 st.set_page_config(
@@ -66,22 +92,6 @@ for message in st.session_state.messages2:
         st.write(message["content"])
 
 
-
-# # Function for generating LLaMA2 response. Refactored from https://github.com/a16z-infra/llama2-chatbot   <-- THIS SECTION WILL NEED TO BE CHANGED FOR OPENAI
-# def generate_llama2_response(prompt_input):
-#     string_dialogue = "You are a helpful assistant. You do not respond as 'User' or pretend to be 'User'. You only respond once as 'Assistant'."
-#     for dict_message in st.session_state.messages:
-#         if dict_message["role"] == "user":
-#             string_dialogue += "User: " + dict_message["content"] + "\n\n"
-#         else:
-#             string_dialogue += "Assistant: " + dict_message["content"] + "\n\n"
-# #    UNCOMMENT BELOW 4 LINES
-#     # output = replicate.run('a16z-infra/llama13b-v2-chat:df7690f1994d94e96ad9d568eac121aecf50684a0b0963b25a41cc40061269e5', 
-#     #                        input={"prompt": f"{string_dialogue} {prompt_input} Assistant: ",
-#     #                               "temperature":temperature, "top_p":top_p, "max_length":max_length, "repetition_penalty":1})
-#     # return output
-            
-
 # User-provided prompt
 if prompt := st.chat_input(placeholder=placeholder):
     st.session_state.messages2.append({"role": "user", "content": prompt})
@@ -94,10 +104,15 @@ if prompt := st.chat_input(placeholder=placeholder):
         stream = client.chat.completions.create(
             model=st.session_state["openai_model"],
             messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages2
+                {"role": "system", "content": primer},
+                {"role": "user", "content": rag_query(prompt)}
             ],
             stream=True,
         )
         response = st.write_stream(stream)
     st.session_state.messages2.append({"role": "assistant", "content": response})
+
+
+
+  
+    

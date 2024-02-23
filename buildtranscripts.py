@@ -60,7 +60,7 @@ for t in data["audio_transcript"]:
         if detect(t) == 'en':
             data.loc[data["audio_transcript"] == t, "en_audio_transcript"]=t
 
-
+data.drop_duplicates(subset=['post_id'],inplace=True)
 data.to_pickle("dataframe.pickle")
 
 data.to_csv("dataframe.csv")
