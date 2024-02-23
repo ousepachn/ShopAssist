@@ -40,7 +40,8 @@ def rag_query(query):
 
     contexts = [result["metadata"]["text"] for result in results['matches']]
     augmented_query = "\n\n---\n\n".join(contexts)+"\n\n---\n\n"+ query    
-    return augmented_query
+    posts=results['matches']
+    return augmented_query,posts
 
 
 #configurations
@@ -102,13 +103,23 @@ if prompt := st.chat_input(placeholder=placeholder):
 
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
+        augmented_query,posts=rag_query(prompt)
         stream = client.chat.completions.create(
             model=st.session_state["openai_model"],
             messages=[
                 {"role": "system", "content": primer},
-                {"role": "user", "content": rag_query(prompt)}
+                {"role": "user", "content": augmented_query}
             ],
             stream=True,
         )
         response = st.write_stream(stream)
+        hd_row=st.container()
+        for post in posts:
+            r1=hd_row.columns([0.15,0.85])
+            r1[0].image(post['metadata']['thumbnail_url'])
+            with r1[1]:
+                st.markdown("**post link:** www.instagram.com/p/"+post['id'],unsafe_allow_html=True)
+                st.markdown('**Date:** '+ post['metadata']['date_utc'])
+                st.markdown('**Tags:** '+str(post['metadata']['caption_hashtags']))
+                st.markdown('**Relevance Score:** '+ str(post['score'])[:4])
     st.session_state.messages.append({"role": "assistant", "content": response})
