@@ -17,8 +17,8 @@ placeholder="What were the under $15 lipsticks reviewed in the last 2 weeks?"
 
 #configurations
 st.set_page_config(
-    page_title="ShopAssist - whatsmitafound",
-    page_icon="👋",
+    page_title="ShopAssist - "+profile_name",
+    page_icon="👗",
 )
 
 
