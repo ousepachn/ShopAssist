@@ -116,7 +116,7 @@ if prompt := st.chat_input(placeholder=placeholder):
         hd_row=st.container()
         for post in posts:
             r1=hd_row.columns([0.15,0.85])
-            r1[0].image(post['metadata']['thumbnail_url'])
+            r1[0].image(str(post['metadata']['thumbnail_url']).replace('\\','/'))
             with r1[1]:
                 st.markdown("**post link:** www.instagram.com/p/"+post['id'],unsafe_allow_html=True)
                 st.markdown('**Date:** '+ post['metadata']['date_utc'])
