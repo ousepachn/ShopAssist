@@ -1,4 +1,7 @@
-posts/
+posts/*.mp4
+posts/*.txt
+posts/*.xz
+
 audio_output/
 .env
 .streamlit/
