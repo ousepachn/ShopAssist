@@ -1,24 +1,34 @@
-import ray
-from pathlib import Path
-from pandas.io.formats import format
+# import ray
+# from pathlib import Path
+# from pandas.io.formats import format
 
-EFS_DIR = "/Users/gallopade/Documents/hackathon/"
-DOCS_DIR = Path(EFS_DIR, "docs.ray.io/en/master")
-
-
-def extract_sections(path):
-    return [
-        {
-            "source": "https://docs.ray.io/en/master/rllib/rllib-env.html#environments",
-            "text": "\nEnvironments#\nRLlib works with several different types of environments, including Farama-Foundation Gymnasium, user-defined, multi-agent, and also batched environments.\nTip\nNot all environments work with all algorithms. Check out the algorithm overview for more information.\n",
-        }
-    ]
+# EFS_DIR = "/Users/gallopade/Documents/hackathon/"
+# DOCS_DIR = Path(EFS_DIR, "docs.ray.io/en/master")
 
 
-print(DOCS_DIR)
-ds = ray.data.from_items(
-    [{"path": path} for path in DOCS_DIR.rglob("*.html") if not path.is_dir()]
-)
-print(f"{ds.count()} documents")
+# def extract_sections(path):
+#     return [
+#         {
+#             "source": "https://docs.ray.io/en/master/rllib/rllib-env.html#environments",
+#             "text": "\nEnvironments#\nRLlib works with several different types of environments, including Farama-Foundation Gymnasium, user-defined, multi-agent, and also batched environments.\nTip\nNot all environments work with all algorithms. Check out the algorithm overview for more information.\n",
+#         }
+#     ]
 
-extract_sections(DOCS_DIR)
+
+# print(DOCS_DIR)
+# ds = ray.data.from_items(
+#     [{"path": path} for path in DOCS_DIR.rglob("*.html") if not path.is_dir()]
+# )
+# print(f"{ds.count()} documents")
+
+# extract_sections(DOCS_DIR)
+import csv
+
+
+with open('hydrationceo-posts.csv') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    meta_data = []
+    for row in csv_reader:
+        meta_data.append(row)
+
+print([{i[6].split("\\")[1]: i for i in meta_data[1:]}])
