@@ -6,3 +6,4 @@ audio_output/
 .env
 .streamlit/
 utils/__pycache__/
+default.sqlite
