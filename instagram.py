@@ -7,14 +7,20 @@ import base64
 from VectorizeDataset import Preprocessing
 from EmbedChunks import EmbedChunks
 from SaveData import SaveData
+from RAGQuery import Evalution
+from Evaluate import Evaluate
+
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 use_serverless = True
 
 SKIP_RATE = 30
 GPT_ACCEPT_RATE = 12
 PATH = "./2024-02-17_15-58-58_UTC.mp4"
-GPT_KEY = "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"
 
-openai.api_key = GPT_KEY
+openai.api_key = os.getenv("OPENAI_API_KEY")
 result = """
 The text in the frames reads as follows:
 
@@ -108,21 +114,23 @@ class CaptureVideoFrames:
         return completion['choices'][0]['text'].strip()
 
     def callGPT(self):
-        frames = self.captureVideo(PATH)
-        result = ""
-        for i in range(0, len(frames), GPT_ACCEPT_RATE * SKIP_RATE):
-            result += self.completeChat(frames[i:i +
-                                        (GPT_ACCEPT_RATE*SKIP_RATE):SKIP_RATE])
-            time.sleep(25)
-        print("\n\n"+result+"\n\n")
-        print(len(frames))
-        print(self.summarizeText(result))
+        # frames = self.captureVideo(PATH)
+        # result = ""
+        # for i in range(0, len(frames), GPT_ACCEPT_RATE * SKIP_RATE):
+        #     result += self.completeChat(frames[i:i +
+        #                                 (GPT_ACCEPT_RATE*SKIP_RATE):SKIP_RATE])
+        #     time.sleep(25)
+        # print("\n\n"+result+"\n\n")
+        # print(len(frames))
+        # print(self.summarizeText(result))
         return "\nThe context is a comparison between the Quo balm and Dior lip glow products in terms of pigmentation and feeling on the lips. The person in the video notes that the two products look identical and have a similar feeling on the lips, but the Quo balm is not as pigmented and does not have peppermint in it. She then asks for the viewer's opinion on whether they should go for the more affordable \"dupe\" or stick with the original Dior product."
 
 
 if __name__ == "__main__":
-    summarizedData = CaptureVideoFrames().callGPT()
-    preProcData = Preprocessing().preprocess(summarizedData)
-    data = EmbedChunks("text-embedding-ada-002")(preProcData)
-    SaveData().insert_data(data)
-    # model(preProcData)
+    # summarizedData = CaptureVideoFrames().callGPT()
+    # batch, metadata = Preprocessing().preprocess(
+    #     summarizedData, "2024-02-17_15-58-58_UTC.mp4")
+    # data = EmbedChunks("text-embedding-ada-002")(batch, metadata)
+    # SaveData().insert_data(data)
+    Evaluate().eval("What is this person talking about?",
+                    {"creatorid": "hydrationceo"})

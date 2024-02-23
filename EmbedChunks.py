@@ -1,18 +1,29 @@
 import uuid
 from langchain_openai import OpenAIEmbeddings
-GPT_KEY = "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"
+OPENAI_API_KEY = "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"
+
+keys = ['creatorid', 'post_id', 'title', 'caption', 'likes', 'thumbnail_url',
+        'url', 'date_utc', 'typename', 'caption_hashtags', 'is_video']
 
 
 class EmbedChunks:
     def __init__(self, model_name):
-        self.embedding_model = OpenAIEmbeddings(openai_api_key=GPT_KEY)
+        self.embedding_model = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
 
-    def __call__(self, batch):
-        res = self.embedding_model.embed_documents(batch[0])
-
+    def __call__(self, batch, metadata):
+        res = self.embedding_model.embed_documents(batch)
+        meta_data_formatted = self.create_metadata(metadata
+                                                   )
         output = []
-        for metadata, embedding in zip(batch[1], res):
+        for embedding, text in zip(res, batch):
             output.append({"id": str(uuid.uuid4()), 'values': embedding,
-                          'metadata': metadata})
+                          'metadata': {'text': text, **meta_data_formatted}})
 
         return output
+
+    def create_metadata(self, metadata):
+        dict = {}
+        for i, j in zip(keys, metadata):
+            dict[i] = j
+
+        return dict

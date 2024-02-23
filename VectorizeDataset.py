@@ -1,10 +1,14 @@
 from langchain.document_loaders import ReadTheDocsLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+import csv
 
 
 class Preprocessing:
-    def preprocess(self, sample_text):
-        chunk_size = 300
+    def __init__(self):
+        self.meta_data = self.read_csv()
+
+    def preprocess(self, sample_text, PATH):
+        chunk_size = 200
         chunk_overlap = 50
         text_splitter = RecursiveCharacterTextSplitter(
             separators=["\n\n", "\n", " ", ""],
@@ -14,6 +18,15 @@ class Preprocessing:
         )
 
         chunks = text_splitter.split_text(sample_text)
-        metadata = [{"source": "Not right now"} for i in chunks]
+        metadata = self.meta_data[PATH]
 
         return [chunks, metadata]
+
+    def read_csv(self):
+        with open('hydrationceo-posts.csv') as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            meta_data = []
+            for row in csv_reader:
+                meta_data.append(row)
+
+        return {i[6].split("\\")[1]: i for i in meta_data[1:]}
