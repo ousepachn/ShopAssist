@@ -1,4 +1,4 @@
 posts/
 audio_output/
 .env
-
+.streamlit/

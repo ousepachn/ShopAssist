@@ -17,6 +17,7 @@ print('followers:',profile.followers)
 print('posts:',profile.mediacount)
 print('bio:', profile.biography)
 print('links:', profile.external_url) 
+pic=ig.download_profiles([profile],posts=False)
 posts = profile.get_posts()
 
 
