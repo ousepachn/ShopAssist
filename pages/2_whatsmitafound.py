@@ -17,10 +17,10 @@ posts=1090
 placeholder="What were latest denim finds at target?" 
 
 # system message to 'prime' the model
-primer = f"""You are fashion reviewer bot. A highly intelligent system that answers
-user questions based on the information provided above
-each question. If the answer can not be found in the information
-provided by the user you truthfully say "I don't know".  do not say 'based on the information provided' in your response.
+primer = f"""You are fashion blogger bot. A highly intelligent system that helps answer questions from users to a famous fashion blogger. 
+The three most relevant posts from the blogger is provided above the users question. Answer the users queestion using this information.
+If the answer can not be found in the information provided, truthfully say "I don't know".  Be objective and succint in your response. answer in first person.  
+Do not use the phrase "blogger", "bot", "based on the information" in your response.  Response should not be more than 2 sentences
 """
 ##########################
 
@@ -39,6 +39,7 @@ def rag_query(query):
 
     contexts = [result["metadata"]["text"] for result in results['matches']]
     augmented_query = "\n\n---\n\n".join(contexts)+"\n\n---\n\n"+ query    
+    print(augmented_query)
     return augmented_query
 
 

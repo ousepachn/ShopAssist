@@ -2,3 +2,4 @@ posts/
 audio_output/
 .env
 .streamlit/
+utils/__pycache__/
