@@ -1,5 +1,4 @@
 millify
 openai
-pinecone-client==3.0.0 
-pinecone-datasets==0.7.0 
-bullmq
+langchain_openai
+pinecone

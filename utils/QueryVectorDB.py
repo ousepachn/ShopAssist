@@ -1,6 +1,5 @@
 import pandas as pd
 from langchain_openai import OpenAIEmbeddings
-from langchain_pinecone import PineconeVectorStore
 import os
 import time
 from pinecone import Pinecone, ServerlessSpec
