@@ -77,6 +77,9 @@ with r1[1]:
 
 #### end header
 
+st.info("""The demo is limited to the last 50 posts (no stories, highlights).\nHere are a few sample queries 
+        [Best Drugstore lipsticks?,   What is the best moisturizer?,  shampoo recommendations for dry scalp?]""")  
+
 client=OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # Set a default model

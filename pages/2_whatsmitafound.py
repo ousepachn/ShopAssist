@@ -75,6 +75,8 @@ with r1[1]:
 
 #### end header
 
+st.info("""The demo is limited to the last 30 posts (no stories, highlights).\nHere are a few sample queries 
+        [Best outfit recommendations from amazon?,   What pairs well with a black skirt?,   Are denims still in?]""")  
 ##begin chatbot, reference: https://github.com/dataprofessor/llama2/blob/master/streamlit_app.py, https://docs.streamlit.io/knowledge-base/tutorials/build-conversational-apps
 
 client=OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
