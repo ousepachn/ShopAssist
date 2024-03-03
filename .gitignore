@@ -1,6 +1,9 @@
 posts/*.mp4
 posts/*.txt
 posts/*.xz
+posts\*.mp4
+posts\*.txt
+posts\*.xz
 video-out/
 audio_output/
 .env
