@@ -33,7 +33,7 @@ spec = ServerlessSpec(
 
 
 ### INITIALIZE AN EMBEDDING INDEX IN PINECONE ##
-index_name = "shopassist-ada-002-v1"
+index_name = "shopassist-ada-002-v2" #"shopassist-ada-002-v1"
 existing_indexes = [
     index_info["name"] for index_info in pc.list_indexes()
 ]
@@ -61,7 +61,7 @@ index.describe_index_stats()
 
 ### LOAD DATA INTO THE PINECONE INDEX ##
 data.drop_duplicates(subset=['post_id'],inplace=True)
-data=data[data["en_audio_transcript"].notna()]
+data=data[data["transcript"].notna()]
 
 batch_size = 100
 
@@ -79,10 +79,10 @@ for i in tqdm(range(0, len(data), batch_size)):
         'thumbnail_url': record['thumbnail_url'],
         'date_utc': record['date_utc'].date(),
         'caption_hashtags': record['caption_hashtags'],
-        'text': record['en_audio_transcript']
+        'text': record['transcript']
     } for j, record in batch.iterrows()]
     # get the list of contexts / documents
-    documents = batch['en_audio_transcript']
+    documents = batch['transcript']
     # create document embeddings
     embeds = embed.embed_documents(documents)
     # get IDs
