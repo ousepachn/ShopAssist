@@ -30,7 +30,7 @@ spec = ServerlessSpec(
 
 
 ### INITIALIZE AN EMBEDDING INDEX IN PINECONE ##
-index_name = "shopassist-ada-002-v1"
+index_name = "shopassist-ada-002-v2"
 
 
 # connect to index
