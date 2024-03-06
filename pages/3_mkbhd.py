@@ -1,16 +1,17 @@
 import streamlit as st
 from openai import OpenAI
 from millify import millify
-import pandas as pd
 import time
 import os
 import utils.QueryVectorDB as qvdb
-
+import pandas as pd 
+from millify import millify
+import datetime 
 
 df=pd.read_pickle('all-profiles03052024.pkl')
 ############hardcoded datainputs
 
-profile_name='hydrationceo'
+profile_name='mkbhd'
 name=df[df['creatorid'] == profile_name]['name'].values[0]
 bio = df[df['creatorid'] == profile_name]['bio'].values[0]
 a_link=f'https://www.instagram.com/{profile_name}/'
@@ -21,11 +22,13 @@ posts = df[df['creatorid'] == profile_name]['posts'].values[0]
 profile_pic = df[df['creatorid'] == profile_name]['profile_pic'].values[0]
 refreshed_Date = df[df['creatorid'] == profile_name]['date_refreshed'].values[0]
 refreshed_Date = str(refreshed_Date)[:10]
-placeholder="What were the under $15 lipsticks reviewed in the last 2 weeks?" 
+
+placeholder = "What is the latest in Tech?" 
+
 ##########################
 
 # system message to 'prime' the model
-primer = f"""You are beauty reviewer bot.  A highly intelligent system that helps answer questions from users. 
+primer = f"""You are Tech reviewer bot.  A highly intelligent system that helps answer questions from users. 
 All available information is provided above the users question. Answer the users question using this information.
 If the answer can not be found in the information provided, truthfully say "I don't know".  Be objective and succint in your response. answer in first person.  
 Do not use the phrase "blogger", "bot", "based on the information" in your response.  Response should not be more than 2 sentences
@@ -70,7 +73,7 @@ st.markdown("""
 )
 hd_row=st.container()
 r1=hd_row.columns([0.33,0.67])
-r1[0].image('hydrationceo/profile_pic.jpg')
+r1[0].image(profile_pic)
 with r1[1]:
     st.subheader(profile_name)
     st.markdown(social_text,unsafe_allow_html=True)

@@ -1,19 +1,25 @@
 import streamlit as st
 from openai import OpenAI
 from millify import millify
+import pandas as pd
 import time
 import os
 import utils.QueryVectorDB as qvdb
 
+df=pd.read_pickle('all-profiles03052024.pkl')
 ############hardcoded datainputs
 
 profile_name='whatsmitafound'
-bio=' Welcome Friend. I’m Smita from Dallas TX \n Stand out style on a budget. Click link below to shop my looks. \n 📧 Whatsmitafound@gmail.com'
-a_link='https://www.instagram.com/whatsmitafound/'
+name=df[df['creatorid'] == profile_name]['name'].values[0]
+bio = df[df['creatorid'] == profile_name]['bio'].values[0]
+a_link=f'https://www.instagram.com/{profile_name}/'
 social_text='Social: [{profile}]({link})'.format(profile=profile_name,link=a_link)
-followers=459261
-followees=1234
-posts=1090
+followers=df[df['creatorid'] == profile_name]['followers'].values[0]
+followees=df[df['creatorid'] == profile_name]['followees'].values[0]
+posts = df[df['creatorid'] == profile_name]['posts'].values[0]
+profile_pic = df[df['creatorid'] == profile_name]['profile_pic'].values[0]
+refreshed_Date = df[df['creatorid'] == profile_name]['date_refreshed'].values[0]
+refreshed_Date = str(refreshed_Date)[:10]
 placeholder="What were latest denim finds at target?" 
 
 # system message to 'prime' the model
@@ -65,7 +71,9 @@ r1[0].image(profile_name+'/profile_pic.jpg')
 with r1[1]:
     st.subheader(profile_name)
     st.markdown(social_text,unsafe_allow_html=True)
+    st.markdown(name)
     st.markdown('Bio: {Bio}'.format(Bio=bio))
+    st.markdown('Last Refreshed: {date}'.format(date=refreshed_Date))
     r1a=st.columns(3)
     r1a[0].metric(label='Posts',value=millify(posts))
     r1a[1].metric(label='Followers',value=millify(followers))

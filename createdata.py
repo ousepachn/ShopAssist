@@ -2,6 +2,8 @@ import instaloader
 import pandas as pd
 import glob
 import os
+import pandas as pd
+import requests
 
 
 def getprofiledata(username):
@@ -9,18 +11,28 @@ def getprofiledata(username):
     profile_data = {
         "creatorid":  profile.username,
         "followers": profile.followers,
+        "followees": profile.followees,
         "posts": profile.mediacount,
         "bio": profile.biography,
-        "links": profile.external_url
-    }
+        "links": profile.external_url,
+        "name": profile.full_name,
+        "date_refreshed": pd.to_datetime('today'), 
+        }
+    ig.download_profilepic(profile) # Fix the typo in the function call
+    jpg_files = glob.glob(f'posts/{profile.username}/*profile_pic.jpg')
+    if jpg_files:
+        latest_profile_pic = max(jpg_files, key=os.path.getctime)
+        profile_data['profile_pic'] = latest_profile_pic
+    else:
+        profile_data['profile_pic'] = None
     print(profile.username)
     print('username:',profile.username)
     print('followers:',profile.followers)
     print('posts:',profile.mediacount)
     print('bio:', profile.biography)
     print('links:', profile.external_url) 
-    return profile_data
 
+    return profile_data
 
 def getpostsdata(profile):
     posts = profile.get_posts()
@@ -90,8 +102,8 @@ for sublist in sa_posts_data:
 df_combined_posts = pd.DataFrame(combined_posts_data)
 df_profiles = pd.DataFrame(sa_profiles_data)
 
-df_combined_posts.to_pickle(f'all-posts-03022024.pkl')
-df_profiles.to_pickle(f'all-profiles03022024.pkl')
+df_combined_posts.to_pickle(f'all-posts-0302024.pkl')
+df_profiles.to_pickle(f'all-profiles03052024.pkl')
 
 df_combined_posts.to_csv(f'all-posts.csv', index=False)
 
