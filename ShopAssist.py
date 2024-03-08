@@ -9,24 +9,26 @@ st.set_page_config(
     page_icon="🛒",
 )
 
-st.sidebar.success("Select an influencer to talk to their AI Assistant, ShopAssist.")
+st.sidebar.success("ShopAssist: Select an influencer to talk to their AI Assistant.")
 
 
 st.markdown(
     """
 
     ## ShopAssist: 
-    ### Your favourite influencers AI assitant. Use ShopAssist to talk to your influencers and search through their content, product reviews, recommendations and more.
+    ### Your favourite influencer's AI assitant. Use ShopAssist to talk to influencers and search through content, product reviews, recommendations and more.
     
-    **👈 Select an influencer profile from the sidebar** to see some examples
+    **👈 Select an influencer profile from the sidebar to see some examples**
 
-    Users of instagram (or any social platform) have great difficulty searching and finding products featured in posts or stories shared by 
-    their favorite influencers. Instagram and other social media applications have limited search 
-    functionality. We've all been there, We liked the lipgloss (or smartwatch) an influencer reviewed last week, 
-    we're at the store now, and we're scanning through countless posts before finally finding the post
-    we wanted. 
-    Why cant you search through influencer posts? Well, Google does not Index social media sites ( Instagram
-    is a walled gardens) and Instagram Search is really bad [(link)](https://www.reddit.com/r/Instagram/comments/vjq7bc/instagram_search_sucks_any_ways_to_get_around_its/). 
+    Social media users have great difficulty searching for products featured in posts or stories shared by 
+    by influencers. Instagram and other social applications have limited search 
+    functionality. 
+    
+    We've all been there, We liked the lipgloss (or smartwatch) an influencer reviewed last week, 
+    we're at the store now, and we're scanning through countless posts before finally giving up in frustration!!
+
+    Why is it so hard to search through influencer posts? Well, Google does not Index social media sites ( Instagram
+    is a walled gardens) and Social platform content search is really bad [(link)](https://www.reddit.com/r/Instagram/comments/vjq7bc/instagram_search_sucks_any_ways_to_get_around_its/). 
     
     Social media companies have no incentive to improve search on their platforms, more time users spend on the platform = more ad revenues.
     
