@@ -1,19 +1,7 @@
 import streamlit as st
 import numpy as np
 from millify import millify
-import time
 
-############hardcoded datainputs
-
-profile_name='hydrationceo'
-bio='📍NYC\n 💖 your unfiltered skincare & beauty bestie \n Business only: rachel@hydrationceo.com\n Product Faves 👇'
-a_link='https://www.instagram.com/hydrationceo/'
-social_text='Social: [{profile}]({link})'.format(profile=profile_name,link=a_link)
-followers=1234567
-followees=1234
-posts=12345
-placeholder="What were the under $15 lipsticks reviewed in the last 2 weeks?" 
-##########################
 
 #configurations
 st.set_page_config(
@@ -21,27 +9,29 @@ st.set_page_config(
     page_icon="🛒",
 )
 
-st.sidebar.success("Select a profile to talk to the AI ShopAssistant.")
+st.sidebar.success("Select an influencer to talk to their AI Assistant, ShopAssist.")
 
 
 st.markdown(
     """
 
     ## ShopAssist: 
-    ### An AI assisted search tool for identifying products reviewed by your favorite influencers on Instagram.
+    ### Your favourite influencers AI assitant. Use ShopAssist to talk to your influencers and search through their content, product reviews, recommendations and more.
     
-    **👈 Select a demo from the sidebar** to see some examples
+    **👈 Select an influencer profile from the sidebar** to see some examples
 
-    Users of instagram have great difficulty searching for products featured in posts or stories shared by 
+    Users of instagram (or any social platform) have great difficulty searching and finding products featured in posts or stories shared by 
     their favorite influencers. Instagram and other social media applications have limited search 
-    functionality. Ex: if you were trying to search for the name of the moisturizer your favorite influencer 
-    shared a story about last week, you will not be able to find.  Google does not Index social media sites like instagram
-    (walled gardens) and Instagram Search is really bad [(link)](https://www.reddit.com/r/Instagram/comments/vjq7bc/instagram_search_sucks_any_ways_to_get_around_its/). 
-    Moreover social media companies  restrict indexing and do not permit external product links in their apps to ensure 
-    that users stay on the platform, but this also restricts the user experience. 
-
-
-
+    functionality. We've all been there, We liked the lipgloss (or smartwatch) an influencer reviewed last week, 
+    we're at the store now, and we're scanning through countless posts before finally finding the post
+    we wanted. 
+    Why cant you search through influencer posts? Well, Google does not Index social media sites ( Instagram
+    is a walled gardens) and Instagram Search is really bad [(link)](https://www.reddit.com/r/Instagram/comments/vjq7bc/instagram_search_sucks_any_ways_to_get_around_its/). 
+    
+    Social media companies have no incentive to improve search on their platforms, more time users spend on the platform = more ad revenues.
+    
+    We thought we could do better.  ShopAssist lets you talk to your influencer and search through their posts. Try it out now!
+    
 """
 )
 
@@ -55,8 +45,10 @@ st.markdown(
     
 
 
-    This demo is limited to only posts data, and has many bugs since it was put together by non developers in less than a week. The technology offers promise
-    and provides influencers an easy way to increase their affiliate sales revenue and reduce the amount of time spent on Content operations. 
+    This is limited demo, restricted to only posts data from the last 50 posts.  It was put together by non developers in less than a week as a POC for something bigger.
+    Email me at [(jcvdevacc@gmail.com)] for more details on the project or if you want to collaborate.  We're working to improve the social 
+    commerce experience for consumers, while providing influencers incremental sales revenue.
+     
 
     
 
