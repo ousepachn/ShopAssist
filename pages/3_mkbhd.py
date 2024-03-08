@@ -99,19 +99,19 @@ if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
 
 # Store LLM generated responses
-if "messages" not in st.session_state.keys():
-    st.session_state["messages"] = [{"role": "assistant", "content": "Ask about the products I featured to get link details and discount codes"}]
+if "messages3" not in st.session_state.keys():
+    st.session_state["messages3"] = [{"role": "assistant", "content": "Ask about the products I featured to get link details and discount codes"}]
 
 
 # Display or clear chat messages
-for message in st.session_state.messages:
+for message in st.session_state.messages3:
     with st.chat_message(message["role"]):
         st.write(message["content"])
 
 
 # User-provided prompt
 if prompt := st.chat_input(placeholder=placeholder):
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.session_state.messages3.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.write(prompt)
     
@@ -138,4 +138,4 @@ if prompt := st.chat_input(placeholder=placeholder):
                     st.markdown('**Date:** '+ post['metadata']['date_utc'])
                     st.markdown('**Tags:** '+str(post['metadata']['caption_hashtags']))
                     st.markdown('**Relevance Score:** '+ str(post['score'])[:4])
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    st.session_state.messages3.append({"role": "assistant", "content": response})
