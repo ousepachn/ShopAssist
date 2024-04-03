@@ -81,12 +81,13 @@ border-radius: 50%;
 #     """,unsafe_allow_html=True
 # )
 # 
-picurl=str(profile_pic).replace('\\','/') #<--- NEED TO CHANGE THIS TO THE BELOW LINE IF YOU WANT TO RUN ON LOCAL
+# picurl=str(profile_pic).replace('\\','/') #<--- NEED TO CHANGE THIS TO THE BELOW LINE IF YOU WANT TO RUN ON LOCAL
 # picurl='./app/static/2023-11-15_21-12-27_UTC_profile_pic.jpg'
 hd_row=st.container()
 
 r1=hd_row.columns([0.3,0.7])
-r1[0].image(str(profile_pic).replace('\\','/'),use_column_width=True)
+with r1[0].container(css="img{border-radius:50%;}"):
+    st.image(str(profile_pic).replace('\\','/'),use_column_width=True)
 # r1[0].markdown(f'<img src="{picurl}" style="{style_image1}">',
 #     unsafe_allow_html=True,
 # )
