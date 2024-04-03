@@ -82,7 +82,7 @@ border-radius: 50%;
 # )
 # 
 # picurl=str(profile_pic).replace('\\','/') #<--- NEED TO CHANGE THIS TO THE BELOW LINE IF YOU WANT TO RUN ON LOCAL
-profilepicurl=f'.\app\static\{profile_name}_profile_pic.jpg'
+profilepicurl=str(f'.\\app\static\{profile_name}_profile_pic.jpg').replace('\\','/')
 hd_row=st.container()
 
 r1=hd_row.columns([0.3,0.7])
