@@ -82,15 +82,14 @@ border-radius: 50%;
 # )
 # 
 # picurl=str(profile_pic).replace('\\','/') #<--- NEED TO CHANGE THIS TO THE BELOW LINE IF YOU WANT TO RUN ON LOCAL
-# picurl='./app/static/2023-11-15_21-12-27_UTC_profile_pic.jpg'
+profilepicurl=f'./app/static/{profile_name}_profile_pic.jpg'
 hd_row=st.container()
 
 r1=hd_row.columns([0.3,0.7])
-with r1[0].container(css="img{border-radius:50%;}"):
-    st.image(str(profile_pic).replace('\\','/'),use_column_width=True)
-# r1[0].markdown(f'<img src="{picurl}" style="{style_image1}">',
-#     unsafe_allow_html=True,
-# )
+
+r1[0].markdown(f'<img src="{profilepicurl}" style="{style_image1}">',
+    unsafe_allow_html=True,
+)
 with r1[1]:
     if st.button("🏠Return Home"):
         st.switch_page(f"pages/ShopAssist.py")
