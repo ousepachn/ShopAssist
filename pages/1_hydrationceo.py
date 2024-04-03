@@ -6,6 +6,15 @@ import time
 import os
 import utils.QueryVectorDB as qvdb
 
+#### css styles
+def fix_mobile_columns():    
+    st.write('''<style>
+    [data-testid="column"] {
+        width: calc(33% - 1rem) !important;
+        flex: 1 1 calc(33% - 1rem) !important;
+        min-width: calc(33% - 1rem) !important;
+    }
+    </style>''', unsafe_allow_html=True)
 
 df=pd.read_pickle('all-profiles03052024.pkl')
 ############hardcoded datainputs
@@ -57,33 +66,40 @@ st.set_page_config(
     page_icon="💆‍♂️",
 )
 
-
-
-
+fix_mobile_columns()
+#css styles
+style_image1 = """
+max-width: 100%;
+border-radius: 50%;
+"""
 
 
 ### begin header
-st.markdown("""
-  <style> .st-emotion-cache-1v0mbdj > img {border-radius: 50%;}
-  </style>
-    """,unsafe_allow_html=True
-)
+# st.markdown("""
+#   <style> .st-emotion-cache-1v0mbdj > img {border-radius: 50%;}
+#   </style>
+#     """,unsafe_allow_html=True
+# )
+# picurl=str(profile_pic).replace('\\','/')
+picurl='./app/static/2023-11-15_21-12-27_UTC_profile_pic.jpg'
 hd_row=st.container()
 
-r1=hd_row.columns([0.33,0.67])
-r1[0].image(str(profile_pic).replace('\\','/'),use_column_width=True)
+r1=hd_row.columns([0.3,0.7])
+# r1[0].image(str(profile_pic).replace('\\','/'),use_column_width=True)
+r1[0].markdown(f'<img src="{picurl}" style="{style_image1}">',
+    unsafe_allow_html=True,
+)
 with r1[1]:
     st.subheader(profile_name)
     st.markdown(social_text,unsafe_allow_html=True)
     st.markdown(name)
     st.markdown('Bio: {Bio}'.format(Bio=bio))
     st.markdown('Last Refreshed: {date}'.format(date=refreshed_Date))
-    r1a=st.columns(3)
-    r1a[0].metric(label='Posts',value=millify(posts))
-    r1a[1].metric(label='Followers',value=millify(followers))
-    
-    r1a[2].metric(label='Following',value=millify(followees))
-    st.divider()
+r1a=st.container().columns(3)
+r1a[0].metric(label='Posts',value=millify(posts))
+r1a[1].metric(label='Followers',value=millify(followers))
+r1a[2].metric(label='Following',value=millify(followees))
+st.divider()
 
 #### end header
 
