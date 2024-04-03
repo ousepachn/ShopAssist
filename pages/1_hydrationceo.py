@@ -86,10 +86,10 @@ picurl=str(profile_pic).replace('\\','/') #<--- NEED TO CHANGE THIS TO THE BELOW
 hd_row=st.container()
 
 r1=hd_row.columns([0.3,0.7])
-# r1[0].image(str(profile_pic).replace('\\','/'),use_column_width=True)
-r1[0].markdown(f'<img src="{picurl}" style="{style_image1}">',
-    unsafe_allow_html=True,
-)
+r1[0].image(str(profile_pic).replace('\\','/'),use_column_width=True)
+# r1[0].markdown(f'<img src="{picurl}" style="{style_image1}">',
+#     unsafe_allow_html=True,
+# )
 with r1[1]:
     if st.button("🏠Return Home"):
         st.switch_page(f"pages/ShopAssist.py")
