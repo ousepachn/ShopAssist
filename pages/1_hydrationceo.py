@@ -80,8 +80,9 @@ border-radius: 50%;
 #   </style>
 #     """,unsafe_allow_html=True
 # )
-# picurl=str(profile_pic).replace('\\','/')
-picurl='./app/static/2023-11-15_21-12-27_UTC_profile_pic.jpg'
+# 
+picurl=str(profile_pic).replace('\\','/') #<--- NEED TO CHANGE THIS TO THE BELOW LINE IF YOU WANT TO RUN ON LOCAL
+# picurl='./app/static/2023-11-15_21-12-27_UTC_profile_pic.jpg'
 hd_row=st.container()
 
 r1=hd_row.columns([0.3,0.7])
