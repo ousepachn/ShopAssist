@@ -29,7 +29,14 @@ st.markdown(
     
     """
 )
-st.markdown('<a href="/hydrationceo" >hydrationceo</a>', unsafe_allow_html=True)
+influencers=["1_hydrationceo","2_whatsmitafound","3_mkbhd"]
+N=3
+row=st.container()
+r1=row.columns(3)
+for count,col in enumerate(r1):
+    with col:
+        if st.button(influencers[count], key=count):
+            st.switch_page(f"pages/{influencers[count]}.py")
 #css styles
 
 st.markdown(
