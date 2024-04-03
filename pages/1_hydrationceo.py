@@ -90,11 +90,14 @@ r1[0].markdown(f'<img src="{picurl}" style="{style_image1}">',
     unsafe_allow_html=True,
 )
 with r1[1]:
+    if st.button("🏠Return Home"):
+        st.switch_page(f"pages/ShopAssist.py")
     st.subheader(profile_name)
     st.markdown(social_text,unsafe_allow_html=True)
     st.markdown(name)
     st.markdown('Bio: {Bio}'.format(Bio=bio))
     st.markdown('Last Refreshed: {date}'.format(date=refreshed_Date))
+    
 r1a=st.container().columns(3)
 r1a[0].metric(label='Posts',value=millify(posts))
 r1a[1].metric(label='Followers',value=millify(followers))
@@ -115,23 +118,26 @@ if "openai_model" not in st.session_state:
 # Store LLM generated responses
 if "messages" not in st.session_state.keys():
     st.session_state["messages"] = [{"role": "assistant", "content": "Ask about the products I featured to get link details and discount codes"}]
-
+avatar = {
+    "assistant": "💄",
+    "user": "🐱"
+}
 
 # Display or clear chat messages
 for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
+    with st.chat_message(message["role"],avatar=avatar[message["role"]]):
         st.write(message["content"])
 
 
 # User-provided prompt
 if prompt := st.chat_input(placeholder=placeholder):
     st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
+    with st.chat_message("user",avatar=avatar["user"]):
         st.write(prompt)
     
 
     # Display assistant response in chat message container
-    with st.chat_message("assistant"):
+    with st.chat_message("assistant",avatar=avatar["assistant"]):
         augmented_query,posts=rag_query(prompt)
         stream = client.chat.completions.create(
             model=st.session_state["openai_model"],
