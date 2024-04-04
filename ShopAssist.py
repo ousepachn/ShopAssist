@@ -18,7 +18,7 @@ st.sidebar.success("ShopAssist: Select an influencer to talk to their AI Assista
 st.markdown(
     """
 
-    ## ShopAssist: Your influencer's AI assitant. 
+    ## ShopAssist: Your influencer's AI assitant. 🛒🧴💻👗
     **Use ShopAssist to search through influencer content, product reviews, recommendations and more.**
     
     Its not easy search and find products featured in posts or stories shared 
@@ -26,7 +26,7 @@ st.markdown(
     capabilities. 
     We thought we could build a better experience.  ShopAssist lets you talk to your influencer and search through their posts. Try it out now!
     
-     **👈 Select an influencer profile from the sidebar to see some examples**
+     ** Select an influencer profile below👇 or from the sidebar to beging**
     
     """
 )
