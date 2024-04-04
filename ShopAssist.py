@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 from millify import millify
+from streamlit_extras.stylable_container import stylable_container
 
 
 
@@ -29,14 +30,36 @@ st.markdown(
     
     """
 )
-influencers=["1_hydrationceo","2_whatsmitafound","3_mkbhd"]
+style_image1 = """
+max-width: 100%;
+border-radius: 50%;
+"""
+
+influencers=["hydrationceo","whatsmitafound","mkbhd"]
 N=3
 row=st.container()
-r1=row.columns(3)
-for count,col in enumerate(r1):
-    with col:
-        if st.button(influencers[count], key=count):
-            st.switch_page(f"pages/{influencers[count]}.py")
+with row:
+    r1=st.columns(3)
+    for count,col in enumerate(r1):
+        with col:
+            with st.container():
+                with stylable_container(
+                key='metrics',
+                css_styles="""
+                [data-testid="column"] {
+                width: calc(20% - 1rem) !important;
+                flex: 1 1 calc(20% - 1rem) !important;
+                min-width: calc(20% - 1rem) !important;
+                }
+                """,
+                ):
+                    img,btn=st.columns([0.2,0.8])
+                    with img:
+                        st.markdown(str(f"<img src='.\\app\static\{influencers[count]}_profile_pic.jpg' style='{style_image1}'>").replace('\\','/'),
+                        unsafe_allow_html=True,)
+                    with btn:
+                        if st.button(influencers[count], key=count):
+                            st.switch_page(f"pages/{influencers[count]}.py")
 #css styles
 
 st.markdown(
