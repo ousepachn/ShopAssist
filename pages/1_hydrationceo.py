@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_extras.stylable_container import stylable_container
 from openai import OpenAI
 from millify import millify
 import pandas as pd
@@ -6,15 +7,6 @@ import time
 import os
 import utils.QueryVectorDB as qvdb
 
-#### css styles
-def fix_mobile_columns():    
-    st.write('''<style>
-    [data-testid="column"] {
-        width: calc(33% - 1rem) !important;
-        flex: 1 1 calc(33% - 1rem) !important;
-        min-width: calc(33% - 1rem) !important;
-    }
-    </style>''', unsafe_allow_html=True)
 
 df=pd.read_pickle('all-profiles03052024.pkl')
 ############hardcoded datainputs
@@ -66,43 +58,67 @@ st.set_page_config(
     page_icon="💆‍♂️",
 )
 
-fix_mobile_columns()
+
 #css styles
 style_image1 = """
 max-width: 100%;
 border-radius: 50%;
 """
 
+tags="""
+    .htag {
+    color: #3E6D8E;
+    background-color: #E0EAF1;
+    padding: 3px 4px 3px 4px;
+    margin: 2px 2px 2px 0;
+    text-decoration: none;
+    font-size: 60%;
+    line-height: 2.4;
+    white-space: nowrap;
+    border-radius: 5%;
+}
 
-### begin header
-# st.markdown("""
-#   <style> .st-emotion-cache-1v0mbdj > img {border-radius: 50%;}
-#   </style>
-#     """,unsafe_allow_html=True
-# )
-# 
-# picurl=str(profile_pic).replace('\\','/') #<--- NEED TO CHANGE THIS TO THE BELOW LINE IF YOU WANT TO RUN ON LOCAL
+.htag:hover {
+    background-color: #3E6D8E !important;
+    color: #E0EAF1;
+    text-decoration: none;
+    border-radius: 5%;
+}
+"""
+
 profilepicurl=str(f'.\\app\static\{profile_name}_profile_pic.jpg').replace('\\','/')
 hd_row=st.container()
 
-r1=hd_row.columns([0.3,0.7])
+r1=hd_row.columns([0.33,0.67])
 
 r1[0].markdown(f'<img src="{profilepicurl}" style="{style_image1}">',
     unsafe_allow_html=True,
 )
 with r1[1]:
     if st.button("🏠Return Home"):
-        st.switch_page(f"pages/ShopAssist.py")
+        st.switch_page(f"ShopAssist.py")
     st.subheader(profile_name)
     st.markdown(social_text,unsafe_allow_html=True)
     st.markdown(name)
     st.markdown('Bio: {Bio}'.format(Bio=bio))
     st.markdown('Last Refreshed: {date}'.format(date=refreshed_Date))
     
-r1a=st.container().columns(3)
-r1a[0].metric(label='Posts',value=millify(posts))
-r1a[1].metric(label='Followers',value=millify(followers))
-r1a[2].metric(label='Following',value=millify(followees))
+r2=st.container()
+with r2:
+    with stylable_container(
+        key='metrics',
+        css_styles="""
+        [data-testid="column"] {
+        width: calc(33% - 1rem) !important;
+        flex: 1 1 calc(33% - 1rem) !important;
+        min-width: calc(33% - 1rem) !important;
+        }
+        """,
+    ):
+        r2a=st.columns(3)
+        r2a[0].metric(label='Posts',value=millify(posts))
+        r2a[1].metric(label='Followers',value=millify(followers))
+        r2a[2].metric(label='Following',value=millify(followees))
 st.divider()
 
 #### end header
@@ -154,9 +170,21 @@ if prompt := st.chat_input(placeholder=placeholder):
             for post in posts:
                 r1=hd_row.columns([0.15,0.85])
                 r1[0].image(str(post['metadata']['thumbnail_url']).replace('\\','/'))
+                hashtags_string = ' '.join([f"<a class='htag' href='https://www.instagram.com/p/{post['id']}'>{tag}</a>" for tag in post['metadata']['caption_hashtags']])
                 with r1[1]:
-                    st.markdown("**post link:** www.instagram.com/p/"+post['id'],unsafe_allow_html=True)
-                    st.markdown('**Date:** '+ post['metadata']['date_utc'])
-                    st.markdown('**Tags:** '+str(post['metadata']['caption_hashtags']))
-                    st.markdown('**Relevance Score:** '+ str(post['score'])[:4])
+                    with stylable_container(
+                    key='metrics',
+                    css_styles=tags,
+                    ):
+                        st.markdown("**post link:** www.instagram.com/p/"+post['id'],unsafe_allow_html=True)
+                        st.markdown('**Post Date:** '+ post['metadata']['date_utc'])
+                        st.markdown('**Tags:** '+hashtags_string, unsafe_allow_html=True)
+                        st.markdown('**Relevance Score:** '+ str(post['score'])[:4])
     st.session_state.messages.append({"role": "assistant", "content": response})
+
+
+
+# ls=df['caption_hashtags'][0]
+
+
+# str()
