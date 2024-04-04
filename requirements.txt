@@ -4,3 +4,4 @@ langchain_openai
 pinecone-client==3.0.0
 s3fs==2023.4.0
 st-files-connection
+streamlit-extras
