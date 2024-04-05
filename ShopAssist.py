@@ -18,7 +18,7 @@ st.sidebar.success("ShopAssist: Select an influencer to talk to their AI Assista
 st.markdown(
     """
 
-    ## ShopAssist: Your influencer's AI assitant. 🛒🧴💻👗
+    ## 🛒 ShopAssist: Your influencer's AI assitant. 
     **Use ShopAssist to search through influencer content, product reviews, recommendations and more.**
     
     Its not easy search and find products featured in posts or stories shared 
@@ -26,7 +26,8 @@ st.markdown(
     capabilities. 
     We thought we could build a better experience.  ShopAssist lets you talk to your influencer and search through their posts. Try it out now!
     
-     ** Select an influencer profile below👇 or from the sidebar to beging**
+     **Select an influencer profile below to begin** 
+     :point_down:
     
     """
 )
@@ -43,23 +44,23 @@ with row:
     for count,col in enumerate(r1):
         with col:
             with st.container():
-                with stylable_container(
-                key='metrics',
-                css_styles="""
-                [data-testid="column"] {
-                width: calc(20% - 1rem) !important;
-                flex: 1 1 calc(20% - 1rem) !important;
-                min-width: calc(20% - 1rem) !important;
-                }
-                """,
-                ):
-                    img,btn=st.columns([0.2,0.8])
-                    with img:
-                        st.markdown(str(f"<img src='.\\app\static\{influencers[count]}_profile_pic.jpg' style='{style_image1}'>").replace('\\','/'),
-                        unsafe_allow_html=True,)
-                    with btn:
-                        if st.button(influencers[count], key=count):
-                            st.switch_page(f"pages/{influencers[count]}.py")
+                # with stylable_container(
+                # key='metrics',
+                # # css_styles="""
+                # # [data-testid="column"] {
+                # # width: calc(20% - 1rem) !important;
+                # # flex: 1 1 calc(20% - 1rem) !important;
+                # # min-width: calc(20% - 1rem) !important;
+                # # }
+                # # """,
+                # ):
+                img,btn=st.columns([0.2,0.8])
+                with img:
+                    st.markdown(str(f"<img src='.\\app\static\{influencers[count]}_profile_pic_sml.jpg' style='{style_image1}'>").replace('\\','/'),
+                    unsafe_allow_html=True,)
+                with btn:
+                    if st.button(influencers[count], key=count):
+                        st.switch_page(f"pages/{influencers[count]}.py")
 #css styles
 
 st.markdown(
@@ -71,7 +72,7 @@ st.markdown(
 
 
 st.markdown("""
-            🍾🥂**:red[Want to] :orange[see] :green[influencers] :orange[you follow] :red[on] :violet[shopassist?] [(click here)](https://forms.gle/S88EPYd5p2keKj9w9)**
+            **:red[Want to] :orange[see] :green[influencers] :orange[you follow] :red[on] :violet[shopassist?] [(click here)](https://forms.gle/S88EPYd5p2keKj9w9)**
             """)
 
 
