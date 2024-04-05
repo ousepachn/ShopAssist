@@ -1,17 +1,11 @@
 [theme]
-primaryColor="#0A2C37"
-backgroundColor="#FFFFFF"
-secondaryBackgroundColor="F5F5F5"
-textColor="#0A2C37"
+
+primaryColor="#d33682"
+backgroundColor="#d9bbf0"
+secondaryBackgroundColor="#9781a9"
+textColor="#4d3e5c"
 font="sans serif"
 
 [server]
 enableStaticServing = true
 
-[theme]
-
-primaryColor="#d33682"
-backgroundColor="#002b36"
-secondaryBackgroundColor="#586e75"
-textColor="#fafafa"
-font="sans serif"
