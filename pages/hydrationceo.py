@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_extras.stylable_container import stylable_container
+from streamlit import _bottom
 from openai import OpenAI
 from millify import millify
 import pandas as pd
@@ -182,7 +183,7 @@ if prompt := st.chat_input(placeholder=placeholder):
                         st.markdown('**Relevance Score:** '+ str(post['score'])[:4])
     st.session_state.messages.append({"role": "assistant", "content": response})
 
-
+_bottom.write("")
 
 # ls=df['caption_hashtags'][0]
 
