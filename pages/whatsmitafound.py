@@ -141,7 +141,7 @@ avatar = {
 
 # Display or clear chat messages
 for message in st.session_state.messages2:
-    with st.chat_message(message["role"]):
+    with st.chat_message(message["role"],avatar=avatar[message["role"]]):
         st.write(message["content"])
 
 
