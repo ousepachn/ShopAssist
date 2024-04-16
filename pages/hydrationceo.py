@@ -4,8 +4,6 @@ from streamlit import _bottom
 from openai import OpenAI
 from millify import millify
 import pandas as pd
-import time
-import os
 import utils.QueryVectorDB as qvdb
 
 
@@ -185,7 +183,3 @@ if prompt := st.chat_input(placeholder=placeholder):
 
 _bottom.write("")
 
-# ls=df['caption_hashtags'][0]
-
-
-# str()

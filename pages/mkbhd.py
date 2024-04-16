@@ -1,12 +1,11 @@
 import streamlit as st
+from streamlit_extras.stylable_container import stylable_container
+from streamlit import _bottom
 from openai import OpenAI
 from millify import millify
-import time
-import os
-import utils.QueryVectorDB as qvdb
 import pandas as pd 
-from millify import millify
-import datetime 
+import utils.QueryVectorDB as qvdb
+
 
 df=pd.read_pickle('all-profiles03052024.pkl')
 ############hardcoded datainputs
@@ -22,7 +21,6 @@ posts = df[df['creatorid'] == profile_name]['posts'].values[0]
 profile_pic = df[df['creatorid'] == profile_name]['profile_pic'].values[0]
 refreshed_Date = df[df['creatorid'] == profile_name]['date_refreshed'].values[0]
 refreshed_Date = str(refreshed_Date)[:10]
-
 placeholder = "What is the latest in Tech?" 
 
 ##########################
@@ -34,7 +32,6 @@ If the answer can not be found in the information provided, truthfully say "I do
 Do not use the phrase "blogger", "bot", "based on the information" in your response.  Response should not be more than 2 sentences
 """
 ##########################
-
 
 def rag_query(query):
     Vector=qvdb.embed.embed_query(query)
@@ -57,35 +54,71 @@ def rag_query(query):
 #configurations
 st.set_page_config(
     page_title="ShopAssist - "+profile_name,
-    page_icon="💆‍♂️",
+    page_icon="🤓",
 )
 
 
+#css styles
+style_image1 = """
+max-width: 100%;
+border-radius: 50%;
+"""
 
+tags="""
+    .htag {
+    color: #3E6D8E;
+    background-color: #E0EAF1;
+    padding: 3px 4px 3px 4px;
+    margin: 2px 2px 2px 0;
+    text-decoration: none;
+    font-size: 60%;
+    line-height: 2.4;
+    white-space: nowrap;
+    border-radius: 5%;
+}
 
+.htag:hover {
+    background-color: #3E6D8E !important;
+    color: #E0EAF1;
+    text-decoration: none;
+    border-radius: 5%;
+}
+"""
 
-
-### begin header
-st.markdown("""
-  <style> .st-emotion-cache-1v0mbdj > img {border-radius: 50%;}
-  </style>
-    """,unsafe_allow_html=True
-)
+profilepicurl=str(f'.\\app\static\{profile_name}_profile_pic.jpg').replace('\\','/')
 hd_row=st.container()
+
 r1=hd_row.columns([0.33,0.67])
-r1[0].image(str(profile_pic).replace('\\','/'))
+
+r1[0].markdown(f'<img src="{profilepicurl}" style="{style_image1}">',
+    unsafe_allow_html=True,
+)
 with r1[1]:
+    if st.button("🏠Return Home"):
+        st.switch_page(f"ShopAssist.py")
     st.subheader(profile_name)
     st.markdown(social_text,unsafe_allow_html=True)
     st.markdown(name)
     st.markdown('Bio: {Bio}'.format(Bio=bio))
     st.markdown('Last Refreshed: {date}'.format(date=refreshed_Date))
-    r1a=st.columns(3)
-    r1a[0].metric(label='Posts',value=millify(posts))
-    r1a[1].metric(label='Followers',value=millify(followers))
     
-    r1a[2].metric(label='Following',value=millify(followees))
-    st.divider()
+r2=st.container()
+with r2:
+    with stylable_container(
+        key='metrics',
+        css_styles="""
+        [data-testid="column"] {
+        width: calc(33% - 1rem) !important;
+        flex: 1 1 calc(33% - 1rem) !important;
+        min-width: calc(33% - 1rem) !important;
+        }
+        """,
+    ):
+        r2a=st.columns(3)
+        r2a[0].metric(label='Posts',value=millify(posts))
+        r2a[1].metric(label='Followers',value=millify(followers))
+        r2a[2].metric(label='Following',value=millify(followees))
+st.divider()
 
 #### end header
 
@@ -101,7 +134,10 @@ if "openai_model" not in st.session_state:
 # Store LLM generated responses
 if "messages3" not in st.session_state.keys():
     st.session_state["messages3"] = [{"role": "assistant", "content": "Ask about the products I featured to get link details and discount codes"}]
-
+avatar = {
+    "assistant": "🤖",
+    "user": "🐱"
+}
 
 # Display or clear chat messages
 for message in st.session_state.messages3:
@@ -133,9 +169,16 @@ if prompt := st.chat_input(placeholder=placeholder):
             for post in posts:
                 r1=hd_row.columns([0.15,0.85])
                 r1[0].image(str(post['metadata']['thumbnail_url']).replace('\\','/'))
+                hashtags_string = ' '.join([f"<a class='htag' href='https://www.instagram.com/p/{post['id']}'>{tag}</a>" for tag in post['metadata']['caption_hashtags']])
                 with r1[1]:
-                    st.markdown("**post link:** www.instagram.com/p/"+post['id'],unsafe_allow_html=True)
-                    st.markdown('**Date:** '+ post['metadata']['date_utc'])
-                    st.markdown('**Tags:** '+str(post['metadata']['caption_hashtags']))
-                    st.markdown('**Relevance Score:** '+ str(post['score'])[:4])
+                    with stylable_container(
+                    key='metrics',
+                    css_styles=tags,
+                    ):
+                        st.markdown("**post link:** www.instagram.com/p/"+post['id'],unsafe_allow_html=True)
+                        st.markdown('**Post Date:** '+ post['metadata']['date_utc'])
+                        st.markdown('**Tags:** '+hashtags_string, unsafe_allow_html=True)
+                        st.markdown('**Relevance Score:** '+ str(post['score'])[:4])
     st.session_state.messages3.append({"role": "assistant", "content": response})
+
+_bottom.write("")
