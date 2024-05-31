@@ -99,7 +99,8 @@ sa_errors=[]
 influencer_list=[#'kirtitewani','hemali.mistry',
                  #'thescenenewyork','payalforstyle',
                  #'fatimaa.younus',
-                 'reeti_shop','hydrationceo', 'whatsmitafound','justanotherhappygirl','radhidevlukia']
+                 #'reeti_shop','hydrationceo', 'whatsmitafound',
+                 'justanotherhappygirl','radhidevlukia']
 influencer_list_test=['hemali.mistry','radhidevlukia']
 
 
