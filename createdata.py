@@ -134,10 +134,9 @@ df_combined_posts = pd.DataFrame(combined_posts_data)
 df_profiles = pd.DataFrame(sa_profiles_data)
 df_errors = pd.DataFrame(combined_errors_data)
 
-df_combined_posts.to_pickle(f'all-posts-05272024v2.pkl')
-df_profiles.to_pickle(f'all-profiles05272024v2.pkl')
-df_errors.to_pickle(f'all-errors05272024v2.pkl')
+df_combined_posts.to_pickle(f'picklefiles/all-posts-05272024v2.pkl')
+df_profiles.to_pickle(f'picklefiles/all-profiles05272024v2.pkl')
+df_errors.to_pickle(f'picklefiles/all-errors05272024v2.pkl')
 
-df_combined_posts.to_csv(f'all-posts-05272024.csv', index=False)
+df_combined_posts.to_csv(f'csvfiles/all-posts-05272024.csv', index=False)
 
-unique_influencers = list(set([post[0]['creatorid'] for post in sa_posts_data]))
