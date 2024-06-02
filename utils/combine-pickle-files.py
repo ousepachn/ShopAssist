@@ -3,7 +3,7 @@ import pandas as pd
 import pickle
 
 # Define the folder path
-folder_path = 'c:\\Users\\ousep\\OneDrive\\Documents\\phase2\\LabLab Hackathon\\ShopAssist\\ShopAssist'
+folder_path = 'c:\\Users\\ousep\\OneDrive\\Documents\\phase2\\LabLab Hackathon\\ShopAssist\\ShopAssist\\picklefiles\\'
 
 def read_pickle_files(folder_path, keyword):
     # Get a list of all pickle files in the folder
@@ -43,8 +43,9 @@ post_count_by_creatorid = all_posts_dataframe.groupby('creatorid')['post_id'].co
 print(post_count_by_creatorid)
 
 # Drop duplicate records based on creatorid and keep the latest records using date refreshed column
-unique_records = all_profiles_dataframe.sort_values('date_refreshed').drop_duplicates('creatorid', keep='last')
+all_profiles_dataframe = all_profiles_dataframe.sort_values('date_refreshed').drop_duplicates('creatorid', keep='last').reset_index(drop=True)
 
-# Print the unique records
-print('Unique records at the creatorid level:')
-print(unique_records)
+# Save the dataframes as pickle files
+all_profiles_dataframe.to_pickle(folder_path + 'all-profiles.pkl')
+all_posts_dataframe.to_pickle(folder_path + 'all-posts.pkl')
+all_errors_dataframe.to_pickle(folder_path + 'all-errors.pkl')

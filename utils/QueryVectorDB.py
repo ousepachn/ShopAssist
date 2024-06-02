@@ -1,3 +1,10 @@
+#################################
+### PURPOSE######################
+##1. UPDATE THE VECTORDB INDEX NAME##
+###############################
+
+
+
 import pandas as pd
 from langchain_openai import OpenAIEmbeddings
 import os
@@ -30,7 +37,7 @@ spec = ServerlessSpec(
 
 
 ### INITIALIZE AN EMBEDDING INDEX IN PINECONE ##
-index_name = "shopassist-ada-002-v2"
+index_name = "shopassist-ada-002-v3"
 
 
 # connect to index
