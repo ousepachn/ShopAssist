@@ -47,9 +47,11 @@ for url in data["url"]:
         creatorid = data.loc[data["url"] == url,'creatorid'].values[0]
         audio_path = convert_video_to_audio(url, audio_outfolder,creatorid)
         data.loc[data["url"] == url, "audio_url"] = audio_path
-    
+
  
 #TODO, ADD AN INDICATOR TO SHOW THAT TRANSCRIPTI0N STARTED
+#TODO, take out music from, background from audio
+#todo, some transcriptions are the same as the previous record, incestigate why?
 
 client = OpenAI()
 Model="whisper-1"
