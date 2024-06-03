@@ -3,14 +3,14 @@ from streamlit_extras.stylable_container import stylable_container
 from streamlit import _bottom
 from openai import OpenAI
 from millify import millify
-import pandas as pd 
+import pandas as pd
 import utils.QueryVectorDB as qvdb
 
 
 df=pd.read_pickle('picklefiles//all-profiles.pkl')
 ############hardcoded datainputs
 
-profile_name='whatsmitafound'
+profile_name='fatimaa.younus'
 name=df[df['creatorid'] == profile_name]['name'].values[0]
 bio = df[df['creatorid'] == profile_name]['bio'].values[0]
 a_link=f'https://www.instagram.com/{profile_name}/'
@@ -21,16 +21,16 @@ posts = df[df['creatorid'] == profile_name]['posts'].values[0]
 profile_pic = df[df['creatorid'] == profile_name]['profile_pic'].values[0]
 refreshed_Date = df[df['creatorid'] == profile_name]['date_refreshed'].values[0]
 refreshed_Date = str(refreshed_Date)[:10]
-placeholder="What were latest denim finds at target?" 
+placeholder="What is your skincare routine?" 
+##########################
 
 # system message to 'prime' the model
-primer = f"""You are fashion reviewer bot. A highly intelligent system that helps answer questions from users to about fashion. 
+primer = f"""You are lifestyle influencer bot.  A highly intelligent system that helps answer questions from users. 
 All available information is provided above the users question. Answer the users question using this information.
 If the answer can not be found in the information provided, truthfully say "I don't know".  Be objective and succint in your response. answer in first person.  
 Do not use the phrase "blogger", "bot", "based on the information" in your response.  Response should not be more than 2 sentences
 """
 ##########################
-
 
 
 def rag_query(query):
@@ -44,9 +44,9 @@ def rag_query(query):
         top_k=3,
         include_metadata=True
     )
+
     contexts = [result["metadata"]["text"] for result in results['matches']]
     augmented_query = "\n\n---\n\n".join(contexts)+"\n\n---\n\n"+ query    
-    
     posts=results['matches']
     return augmented_query,posts
 
@@ -54,7 +54,7 @@ def rag_query(query):
 #configurations
 st.set_page_config(
     page_title="ShopAssist - "+profile_name,
-    page_icon="👗",
+    page_icon="🍴",
 )
 
 
@@ -122,8 +122,8 @@ st.divider()
 
 #### end header
 
-st.info("""The demo is limited to the last 30 posts (no stories, highlights).\nHere are a few sample queries 
-        [Best outfit recommendations from amazon?,   What pairs well with a black skirt?,   Are denims still in?]""")  
+st.info("""The demo is limited to the last 50 posts (no stories, highlights).\nHere are a few sample queries 
+        [What is your skincare routine?,   what is my favorite meal?,  recommendations for traditional indian dresses?]""")  
 
 client=OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
@@ -132,28 +132,28 @@ if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
 
 # Store LLM generated responses
-if "messages2" not in st.session_state.keys():
-    st.session_state["messages2"] = [{"role": "assistant", "content": "Ask about the products I featured to get link details and discount codes"}]
+if "messages3" not in st.session_state.keys():
+    st.session_state["messages3"] = [{"role": "assistant", "content": "Ask about the products I featured to get link details and discount codes"}]
 avatar = {
-    "assistant": "👗",
+    "assistant": "🍾",
     "user": "🐱"
 }
 
 # Display or clear chat messages
-for message in st.session_state.messages2:
+for message in st.session_state.messages3:
     with st.chat_message(message["role"],avatar=avatar[message["role"]]):
         st.write(message["content"])
 
 
 # User-provided prompt
 if prompt := st.chat_input(placeholder=placeholder):
-    st.session_state.messages2.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
+    st.session_state.messages3.append({"role": "user", "content": prompt})
+    with st.chat_message("user",avatar=avatar["user"]):
         st.write(prompt)
     
- 
+
     # Display assistant response in chat message container
-    with st.chat_message("assistant"):
+    with st.chat_message("assistant",avatar=avatar["assistant"]):
         augmented_query,posts=rag_query(prompt)
         stream = client.chat.completions.create(
             model=st.session_state["openai_model"],
@@ -179,6 +179,7 @@ if prompt := st.chat_input(placeholder=placeholder):
                         st.markdown('**Post Date:** '+ post['metadata']['date_utc'])
                         st.markdown('**Tags:** '+hashtags_string, unsafe_allow_html=True)
                         st.markdown('**Relevance Score:** '+ str(post['score'])[:4])
-    st.session_state.messages2.append({"role": "assistant", "content": response})
+    st.session_state.messages3.append({"role": "assistant", "content": response})
 
 _bottom.write("")
+

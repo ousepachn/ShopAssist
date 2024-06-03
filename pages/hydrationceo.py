@@ -7,7 +7,7 @@ import pandas as pd
 import utils.QueryVectorDB as qvdb
 
 
-df=pd.read_pickle('all-profiles03052024.pkl')
+df=pd.read_pickle('picklefiles//all-profiles.pkl')
 ############hardcoded datainputs
 
 profile_name='hydrationceo'
