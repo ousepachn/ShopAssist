@@ -123,7 +123,7 @@ st.divider()
 #### end header
 
 st.info("""The demo is limited to the last 50 posts (no stories, highlights).\nHere are a few sample queries 
-        [What is your skincare routine?,   what is my favorite meal?,  recommendations for traditional indian dresses?]""")  
+        [How do you manage family time and work time?,   Do you recommend any middle eastern restaurants?,  what childresn books do you recommend?]""")  
 
 client=OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
