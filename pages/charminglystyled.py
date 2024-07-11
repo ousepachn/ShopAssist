@@ -21,7 +21,7 @@ posts = df[df['creatorid'] == profile_name]['posts'].values[0]
 profile_pic = df[df['creatorid'] == profile_name]['profile_pic'].values[0]
 refreshed_Date = df[df['creatorid'] == profile_name]['date_refreshed'].values[0]
 refreshed_Date = str(refreshed_Date)[:10]
-placeholder="What were latest denim finds at target?" 
+placeholder="What is my favorite place to get an iced tea?" 
 
 # system message to 'prime' the model
 primer = f"""You are lifestyle influencer bot.  A highly intelligent system that helps answer questions from users. 
