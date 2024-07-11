@@ -123,7 +123,7 @@ st.divider()
 #### end header
 
 st.info("""The demo is limited to the last 30 posts (no stories, highlights).\nHere are a few sample queries 
-        [Best outfit recommendations from amazon?,   What pairs well with a black skirt?,   Are denims still in?]""")  
+        [Halloween Decor Recommendations?,   What are the latest deals at Dunkin?,   Whats the best place to get an Iced Tea?]""")  
 
 client=OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
