@@ -38,7 +38,7 @@ def convert_audio_to_transcript(audio_path):
     return transcript
 
 # Append together pickle files and create a dataframe
-data = pd.read_pickle('picklefiles\\all-posts.pkl')
+data = pd.read_pickle('picklefiles\\all-posts-07102024v2.pkl')
 
 # Convert video to audio.  Iterate through the dataframe and process each URL, 
 for url in data["url"]:
@@ -72,8 +72,8 @@ for t in data["audio_transcript"]:
             data.loc[data["audio_transcript"] == t, "en_audio_transcript"]=t
 
 data.drop_duplicates(subset=['post_id'],inplace=True)
-data.to_pickle('picklefiles\\all-postss2.pkl')
+data.to_pickle('picklefiles\\all-postss2-tmp.pkl')
 
-data.to_csv("csvfiles\\allpostss2.csv")
+data.to_csv("csvfiles\\allpostss2-tmp.csv")
 
 

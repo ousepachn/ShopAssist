@@ -20,10 +20,10 @@ Client=OpenAI()
 
 
 #read the latest dataframe
-df = pd.read_pickle('picklefiles\\all-postss2.pkl')
+df = pd.read_pickle('picklefiles\\all-postss2-tmp.pkl')
 video_outfolder = "video-out"
 
-df = df[df['creatorid'].isin(["kirtitewani","fatimaa.younus","hemali.mistry","whatsmitafound","hydrationceo"])]
+df = df[df['creatorid'].isin(["kirtitewani","fatimaa.younus","hemali.mistry","whatsmitafound","hydrationceo","charminglystyled"])]
 #PROMPT TEMPLATES:
 # Define creatorid to text mappings
 creatorid_to_text = {
@@ -33,7 +33,8 @@ creatorid_to_text = {
   "hemali.mistry": "The below pictures are frames from a video sequence from a lifestyle influencer. Try to extract all text and product labels mentioned in the images. Try to describe all locations, brands, fashion products, restaurant locations, travel details etc in 1-2 sentences. If something is not clear, do not make stuff up. You dont have to comment about the people. The product, restaurant promotiions are most important.",
   "thescenenewyork": "The below pictures are frames from a video sequence from a restaurant reviewer. Try to extract all text, restaurant name, location and cuisine related details mentioned. If there are special themes associated with the restaurant, try to extract that as well. Descriptions should be maximum 1-2 sentences.  If something is not clear, do not make stuff up. You dont have to comment about the people. The cuisine, atmosphere and location details are important.",
   "payalforstyle": "The below pictures are frames from a video sequence from a lifestyle influencer. Try to extract all text and product labels mentioned in the images. Try to describe all locations, brands, fashion products, restaurant locations, travel details etc in 1-2 sentences. If something is not clear, do not make stuff up. You dont have to comment about the person. The product, restaurant promotiions are most important.",
-  "fatimaa.younus": "The below pictures are frames from a video sequence from a lifestyle influencer. Try to extract all text and product labels mentioned in the images. Try to describe all locations, brands, fashion products, restaurant locations, travel details etc in 1-2 sentences. If something is not clear, do not make stuff up. You dont have to comment about the person. The product, restaurant promotiions are most important."
+  "fatimaa.younus": "The below pictures are frames from a video sequence from a lifestyle influencer. Try to extract all text and product labels mentioned in the images. Try to describe all locations, brands, fashion products, restaurant locations, travel details etc in 1-2 sentences. If something is not clear, do not make stuff up. You dont have to comment about the person. The product, restaurant promotiions are most important.",
+  "charminglystyled":"The below pictures are frames from a video sequence from a lifestyle influencer. Try to extract all text and product labels mentioned in the images. Try to describe all locations, brands, fashion products, restaurant locations, travel details etc in 1-2 sentences. If something is not clear, do not make stuff up. You dont have to comment about the person. The names of the products, restaurants and other topics featured in the video are most important."
   # Add more mappings as needed
 }
 
@@ -134,14 +135,9 @@ for url in df['url']:
       df.loc[df["url"] == url, "frames_url"] = frames_path
 
 
-df.to_pickle("picklefiles\\all-postss3v2.pkl")
+df.to_pickle("picklefiles\\all-postss3v2-tmp.pkl")
 
-#####TEMPORRARY CODE TO BE DELETED
-df=pd.read_pickle("picklefiles\\all-postss3.pkl")
-df=pd.read_pickle("picklefiles\\all-postss3v2.pkl")
-df=pd.concat([dfa,dfb])
 
-################################
 df['video_transcript']='nan'  
   
 
@@ -155,7 +151,7 @@ for frames in df["frames_url"]:
       print(f"remaining requests: {res_header['x-ratelimit-remaining-requests']}")
       print(f"remaining tokens: {res_header['x-ratelimit-remaining-tokens']}")
 
-df.to_pickle("picklefiles\\all-postss4v3.pkl")
+df.to_pickle("picklefiles\\all-postss4v3-tmp.pkl")
 
 
 #loop for missed videos
@@ -173,7 +169,7 @@ for frames in missed_videos:
       print(f"remaining requests: {res_header['x-ratelimit-remaining-requests']}")
       print(f"remaining tokens  tokens: {res_header['x-ratelimit-remaining-tokens']}")
 
-df.to_pickle("picklefiles\\all-postss5.pkl")
+df.to_pickle("picklefiles\\all-postss5-tmp.pkl")
 
 
 df.reset_index(drop=True, inplace=True)
@@ -212,6 +208,6 @@ for index, row in df.iterrows():
   df.loc[index, "transcript"] = transcript_op
   df.loc[index, "transcript-long"] = transcript_op_full
     
-df.to_pickle("picklefiles\\all-postss6.pkl")
+df.to_pickle("picklefiles\\all-postss6-tmp.pkl")
 
 

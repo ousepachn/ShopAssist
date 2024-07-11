@@ -100,7 +100,8 @@ influencer_list=[#'kirtitewani','hemali.mistry',
                  #'thescenenewyork','payalforstyle',
                  #'fatimaa.younus',
                  #'reeti_shop','hydrationceo', 'whatsmitafound',
-                 'justanotherhappygirl','radhidevlukia']
+                #  'justanotherhappygirl','radhidevlukia'
+                 'charminglystyled']
 influencer_list_test=['hemali.mistry','radhidevlukia']
 
 
@@ -134,9 +135,12 @@ df_combined_posts = pd.DataFrame(combined_posts_data)
 df_profiles = pd.DataFrame(sa_profiles_data)
 df_errors = pd.DataFrame(combined_errors_data)
 
-df_combined_posts.to_pickle(f'picklefiles/all-posts-05272024v2.pkl')
-df_profiles.to_pickle(f'picklefiles/all-profiles05272024v2.pkl')
-df_errors.to_pickle(f'picklefiles/all-errors05272024v2.pkl')
 
-df_combined_posts.to_csv(f'csvfiles/all-posts-05272024.csv', index=False)
+os.chdir('c:\\Users\\ousep\\OneDrive\\Documents\\phase2\\LabLab Hackathon\\ShopAssist\\ShopAssist\\')
+
+df_combined_posts.to_pickle(f'picklefiles/all-posts-07102024v2.pkl')
+df_profiles.to_pickle(f'picklefiles/all-profiles07102024v2.pkl')
+df_errors.to_pickle(f'picklefiles/all-errors07102024v2.pkl')
+
+df_combined_posts.to_csv(f'csvfiles/all-posts-07102024.csv', index=False)
 

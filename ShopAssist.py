@@ -35,7 +35,7 @@ max-width: 100%;
 border-radius: 50%;
 """
 
-influencers=["hydrationceo","whatsmitafound","fatimaa.younus",
+influencers=["hydrationceo","whatsmitafound","charminglystyled",
              "kirtitewani","hemali.mistry","thescenenewyork",
              "payalforstyle","mkbhd","reeti_shop"]
 

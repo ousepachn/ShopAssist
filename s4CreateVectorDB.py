@@ -13,6 +13,12 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 data=pd.read_pickle('picklefiles//all-postss6.pkl')
 
+data=pd.concat([data,df])
+
+data.to_pickle(f'picklefiles/all-posts')
+profiles=pd.read_pickle('picklefiles//all-profiles.pkl')
+df_profiles=pd.concat([profiles,df_profiles])
+df_profiles.to_pickle(f'picklefiles//all-profiles.pkl')
 model_name = 'text-embedding-ada-002'
 
 embed = OpenAIEmbeddings(
